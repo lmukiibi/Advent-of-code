@@ -39,6 +39,38 @@ namespace Advent_of_code
 
         }
 
+
+        public static List<string> StringOfBlocksToList(string s)
+        {
+            string buffer = "";
+            string temp = "";
+            List<string> listOfStrings = new List<string>();
+            List<string> returnList = new List<string>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i].ToString() != "\n")
+                    buffer += s[i];
+                else
+                {
+                    listOfStrings.Add(buffer);
+                    buffer = "";
+                }
+            }
+            listOfStrings.Add(buffer);
+            foreach (String st in listOfStrings)
+            {
+                temp = "";
+                for (int i = 0; i < st.Length; i++)
+                {
+                    if (s[i].ToString() != "\r")
+                        temp += st[i];
+                }
+                returnList.Add(temp);
+            }
+            return returnList;
+
+        }
+
         public static List<int> ListOfStringsToListOfInts(List<string> list)
         {
             List<int> buffer = new List<int>();
