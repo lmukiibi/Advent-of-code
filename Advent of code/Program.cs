@@ -11,10 +11,26 @@ namespace Advent_of_code
     {
         static void Main(string[] args)
         {
-            Day1 day1 = new Day1();
-
-
-            day1.Run();
+            Console.WriteLine("Enter Code");
+            string code = Console.ReadLine();
+            switch (code)
+            {
+                case "dayone":
+                    Day1 day1 = new Day1();
+                    day1.Run();
+                    break;
+                case "daytwo":
+                    Day2 day2 = new Day2();
+                    day2.Run();
+                    break;
+                case "daythree":
+                    Day3 day3 = new Day3();
+                    day3.Run();
+                    break;
+                default:
+                    Console.WriteLine("Wrong input");
+                    break;
+            }
         }
     }
 }

@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Days\aDefault Class.cs" />
     <Compile Include="Days\Day1.cs" />
+    <Compile Include="Days\Day2.cs" />
+    <Compile Include="Days\Day3.cs" />
     <Compile Include="Import Class.cs" />
     <Compile Include="Logics Class.cs" />
     <Compile Include="Program.cs" />
