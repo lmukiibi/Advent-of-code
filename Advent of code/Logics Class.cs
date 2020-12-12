@@ -11,6 +11,7 @@ namespace Advent_of_code
         public static List<string> StringToList(string s)
         {
             string buffer = "";
+            string[] temp = null;
             List<string> listOfStrings = new List<string>();
             for (int i = 0; i < s.Length; i++)
             {
@@ -18,11 +19,19 @@ namespace Advent_of_code
                     buffer += s[i];
                 else
                 {
-                    listOfStrings.Add(buffer);
+                    if (buffer.Contains("\r"))
+                    {
+                        temp = buffer.Split('\r');
+                        listOfStrings.Add(temp[0]);
+                    }
                     buffer = "";
                 }
             }
-            listOfStrings.Add(buffer);
+            if (buffer.Contains("\r"))
+            {
+                temp = buffer.Split('\r');
+                listOfStrings.Add(temp[0]);
+            }
             return listOfStrings;
 
         }
@@ -50,9 +59,9 @@ namespace Advent_of_code
             for (int i = 0; i < list.Count; i++)
                 for (int j = 0; j < list.Count; j++)
                     for (int k = 0; k < list.Count; k++)
-                    if (list[i] + list[j] + list[k] == targetSum)
-                        // i = 33 - j = 69 - k = 90
-                        return list[i] + list[j] + list[k];
+                        if (list[i] + list[j] + list[k] == targetSum)
+                            // i = 33 - j = 69 - k = 90
+                            return list[i] + list[j] + list[k];
             return 0;
 
         }
@@ -140,7 +149,7 @@ namespace Advent_of_code
         //returns true if target is at min or max once
         private static bool CalculatePasswordPartTwo(string range, string target, string password)
         {
-            int min = 0, max = 0, count = 0;
+            int min = 0, max = 0;
             string temp = "";
 
             //Get min and max range
@@ -155,9 +164,73 @@ namespace Advent_of_code
             max = Convert.ToInt32(temp);
 
             //Counts the amount the target charecter appears and it should only be once
-                if (password[min - 1].ToString() == target ^ password[max - 1].ToString() == target)
-                    return true;
+            if (password[min - 1].ToString() == target ^ password[max - 1].ToString() == target)
+                return true;
             return false;
         }
+
+        public static char[,] ListOfStringsTo2DArray(List<string> list)
+        {
+            char[,] twoDarr = new char[list.Count, list[0].Length];
+            for (int i = 0; i < list.Count; i++)
+                for (int j = 0; j < list[0].Length; j++)
+                    twoDarr[i, j] = list[i][j];
+            return twoDarr;
+        }
+
+        public static char[,] CalculateNumberOfTreeHits(char[,] twoDArr, int y, int x, out int count, int r, int d)
+        {
+            int right = r, down = d, currentX = 0, currentY = 0;
+            char xx = 'X', o = 'O', dot = '.', tree = '#';
+            int tempCount = 0; ;
+            while (currentX < x && currentY < y)
+            {
+                if (twoDArr[currentY, currentX] == dot)
+                    twoDArr[currentY, currentX] = o;
+                else if (twoDArr[currentY, currentX] == tree)
+                {
+                    twoDArr[currentY, currentX] = xx;
+                    tempCount++;
+                }
+                currentX += right;
+                currentY += down;
+            }
+            //Console.WriteLine($"You hit {tempCount}");
+            //We hit 187 trees
+            count = tempCount;
+            return twoDArr;
+
+        }
+
+        public static char[,] ExtendTheMap(List<string> list, int y, int x)
+        {
+            char[,] bigMap = new char[y, x * 100];
+            int i = 0;
+            string tempString = "";
+
+            for (int j = 0; j < y; j++)
+            {
+                i = 0;
+                tempString = list[j];
+                for (int k = 0; k < x * 100; k++)
+                {
+                    if (i < tempString.Length)
+                    {
+                        bigMap[j, k] = tempString[i];
+                        
+                    }
+                    else
+                    {
+                        i = 0;
+                        bigMap[j, k] = tempString[i];
+                    }
+                    i++;
+                }
+            }
+            return bigMap;
+        }
     }
+
+
+      
 }
