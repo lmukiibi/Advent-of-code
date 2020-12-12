@@ -11,28 +11,31 @@ namespace Advent_of_code
         public static List<string> StringToList(string s)
         {
             string buffer = "";
-            string[] temp = null;
+            string temp = "";
             List<string> listOfStrings = new List<string>();
+            List<string> returnList = new List<string>();
             for (int i = 0; i < s.Length; i++)
             {
                 if (s[i].ToString() != "\n")
                     buffer += s[i];
                 else
                 {
-                    if (buffer.Contains("\r"))
-                    {
-                        temp = buffer.Split('\r');
-                        listOfStrings.Add(temp[0]);
-                    }
+                    listOfStrings.Add(buffer);
                     buffer = "";
                 }
             }
-            if (buffer.Contains("\r"))
+            listOfStrings.Add(buffer);
+            foreach (String st in listOfStrings)
             {
-                temp = buffer.Split('\r');
-                listOfStrings.Add(temp[0]);
+                temp = "";
+                for (int i = 0; i < st.Length; i++)
+                {
+                    if (s[i].ToString() != "\r")
+                        temp += st[i];
+                }
+                returnList.Add(temp);
             }
-            return listOfStrings;
+            return returnList;
 
         }
 
@@ -182,7 +185,7 @@ namespace Advent_of_code
         {
             int right = r, down = d, currentX = 0, currentY = 0;
             char xx = 'X', o = 'O', dot = '.', tree = '#';
-            int tempCount = 0; ;
+            int tempCount = 0, rowCount = 0; 
             while (currentX < x && currentY < y)
             {
                 if (twoDArr[currentY, currentX] == dot)
@@ -194,9 +197,11 @@ namespace Advent_of_code
                 }
                 currentX += right;
                 currentY += down;
+                rowCount++;
             }
             //Console.WriteLine($"You hit {tempCount}");
             //We hit 187 trees
+            Console.WriteLine("Rows" + rowCount.ToString());
             count = tempCount;
             return twoDArr;
 
@@ -204,15 +209,17 @@ namespace Advent_of_code
 
         public static char[,] ExtendTheMap(List<string> list, int y, int x)
         {
-            char[,] bigMap = new char[y, x * 100];
-            int i = 0;
+            int multiply = 300;
+            char[,] bigMap = new char[y, x * multiply];
+            int i = 0, rowCount = 0;
             string tempString = "";
 
             for (int j = 0; j < y; j++)
             {
+                rowCount = j;
                 i = 0;
                 tempString = list[j];
-                for (int k = 0; k < x * 100; k++)
+                for (int k = 0; k < x * multiply; k++)
                 {
                     if (i < tempString.Length)
                     {
