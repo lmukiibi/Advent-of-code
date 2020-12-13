@@ -31,6 +31,10 @@ namespace Advent_of_code
                     Day4 day4 = new Day4();
                     day4.Run();
                     break;
+                case "dayfive":
+                    Day5 day5 = new Day5();
+                    day5.Run();
+                    break;
                 default:
                     Console.WriteLine("Wrong input");
                     break;

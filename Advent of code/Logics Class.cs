@@ -296,6 +296,7 @@ namespace Advent_of_code
             return bigMap;
         }
 
+        //Most of the logics are in Passport Class
         public static int CheckValidPassports(List<Passport> passports)
         {
             int count = 0;
@@ -305,6 +306,52 @@ namespace Advent_of_code
                     count++;
             }
             return count;
+        }
+
+        public static List<int> CalculateSeatIDs(List<string> list)
+        {
+            int[] steps = new int[] { 64, 32, 16, 8, 4, 2, 1, 4, 2, 1 };
+            string sTemp = "";
+            List<int> seatIDs = new List<int>();
+            int row = 0, seat = 0;
+            foreach (String str in list)
+            {
+                row = seat = 0;
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (str[i] == 'B')
+                        row += steps[i];
+                    if (str[i] == 'R')
+                        seat += steps[i];
+                }
+                seatIDs.Add(row * 8 + seat);
+            }
+            return seatIDs;
+        }
+
+        public static List<int> FindSeat(List<int> seatID)
+        {
+            List<int> missingSeats = new List<int>();
+            List<int> freeSeats = new List<int>();
+            bool exists = false;
+
+            for (int i = 0; i < seatID.Count; i++)
+                missingSeats.Add(-1);
+            for (int i = 0; i < seatID.Count; i++)
+            {
+                if(seatID[i] < seatID.Count)
+                missingSeats[seatID[i]] = 1;
+            }
+
+
+
+            for (int i = 0; i < missingSeats.Count; i++)
+            {
+                if (missingSeats[i] < 0)
+                    freeSeats.Add(i);
+            }
+
+            return freeSeats;
         }
     }
 
