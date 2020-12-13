@@ -9,6 +9,7 @@ namespace Advent_of_code
     class Passport
     {
         public string[] KEYS = new string[] { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid", "cid" };
+        public string[] eyeColor = new string[] { "amb", "blu", "brn", "gry", "grn", "hzl", "oth" };
         private Dictionary<string, string> byr;
         private Dictionary<string, string> iyr;
         private Dictionary<string, string> eyr;
@@ -95,21 +96,24 @@ namespace Advent_of_code
                 }
                 catch (Exception e) { missingKEYS.Add(KEYS[i]); }
             }
+
             //This is for part 1
             //if (count == KEYS.Length)
             //    valid = true;
-            else if (missingKEYS.Count == 1 && missingKEYS[0] == "cid")
-            {
-                valid = true;
-            }
+            if (missingKEYS.Count == 1 && missingKEYS[0] == "cid")
+                valid = CheckOtherParameters();
+            else if (missingKEYS.Count == 0)
+                valid = CheckOtherParameters();
         }
 
         private bool CheckOtherParameters()
         {
+            string charactersAllowed = "0123456789abcdef#";
             int iTemp = 0;
-            if (myDictionary["bry"].Length == 4)
+            string sTemp = "";
+            if (myDictionary["byr"].Length == 4)
             {
-                iTemp = Convert.ToInt32(myDictionary["bry"]);
+                iTemp = Convert.ToInt32(myDictionary["byr"]);
                 if (iTemp > 1919 && iTemp < 2003)
                 {
                     if (myDictionary["iyr"].Length == 4)
@@ -119,10 +123,80 @@ namespace Advent_of_code
                         {
                             if (myDictionary["eyr"].Length == 4)
                             {
-                                iTemp = Convert.ToInt32(myDictionary["bry"]);
+                                iTemp = Convert.ToInt32(myDictionary["eyr"]);
                                 if (iTemp > 2019 && iTemp < 2031)
                                 {
+                                    if (myDictionary["hgt"].Contains("cm"))
+                                    {
+                                        if (myDictionary["hgt"].Length == 5)
+                                        {
+                                            sTemp = myDictionary["hgt"][0].ToString();
+                                            sTemp += myDictionary["hgt"][1];
+                                            sTemp += myDictionary["hgt"][2];
+                                            iTemp = Convert.ToInt32(sTemp);
+                                            if (iTemp > 149 && iTemp < 194)
+                                            {
+                                                if (myDictionary["hcl"].Length == 7)
+                                                {
+                                                    sTemp = myDictionary["hcl"];
+                                                    if (sTemp[0] == '#')
+                                                    {
+                                                        for (int i = 0; i < sTemp.Length; i++)
+                                                        {
+                                                            if (!charactersAllowed.Contains(sTemp[i]))
+                                                                break;
+                                                        }
+                                                        foreach (String eye in eyeColor)
+                                                        {
+                                                            if (myDictionary["ecl"] == eye)
+                                                            {
+                                                                if (myDictionary["pid"].Length == 9)
+                                                                {
+                                                                    return true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
 
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else if (myDictionary["hgt"].Contains("in"))
+                                    {
+                                        if (myDictionary["hgt"].Length == 4)
+                                        {
+                                            sTemp = myDictionary["hgt"][0].ToString();
+                                            sTemp += myDictionary["hgt"][1];
+                                            iTemp = Convert.ToInt32(sTemp);
+                                            if (iTemp > 58 && iTemp < 77)
+                                            {
+                                                if (myDictionary["hcl"].Length == 7)
+                                                {
+                                                    sTemp = myDictionary["hcl"];
+                                                    if (sTemp[0] == '#')
+                                                    {
+                                                        for (int i = 0; i < sTemp.Length; i++)
+                                                        {
+                                                            if (!charactersAllowed.Contains(sTemp[i]))
+                                                                break;
+                                                        }
+                                                        foreach (String eye in eyeColor)
+                                                        {
+                                                            if (myDictionary["ecl"] == eye)
+                                                            {
+                                                                if (myDictionary["pid"].Length == 9)
+                                                                {
+                                                                    return true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
