@@ -15,6 +15,8 @@ namespace Advent_of_code.Days
         List<Passport> myPassports;
 
         List<string> listOfValues;
+
+        int count;
         public Day4()
         {
             importedString = Import_Class.ImportFile(path);
@@ -25,17 +27,40 @@ namespace Advent_of_code.Days
         {
             myPassports = Logics_Class.StringOfBlocksToList(importedString);
 
-            WriteAllPassports(myPassports);
-            
+            //WriteAllPassports(myPassports);
+
+            count = Logics_Class.CheckValidPassports(myPassports);
+            Console.WriteLine($"{count} valid passports.");
+            foreach (Passport p in myPassports)
+            {
+                if (p.Valid)
+                {
+                    for (int i = 0; i < p.KEYS.Length; i++)
+                        try
+                        {
+                            Console.Write($"{p.MyPassport[p.KEYS[i]]} ");
+                        }
+                        catch (Exception e) { }
+                    Console.WriteLine("");
+                }
+            }
             //Console.WriteLine(importedString);
             Console.ReadKey();
         }
+
+        
 
         private void WriteAllPassports(List<Passport> pass)
         {
             foreach (Passport p in pass)
             {
-                Console.WriteLine($"{p.Byr} {p.Cid} {p.Ecl} {p.Eyr} {p.Hcl} {p.Hgt} {p.Iyr} {p.Pid}\n");
+                for (int i = 0; i < p.KEYS.Length; i++)
+                    try
+                    {
+                        Console.Write($"{p.MyPassport[p.KEYS[i]]}\t");
+                    }
+                    catch (Exception e) { Console.Write("       \t"); };
+                Console.WriteLine("");
             }
         }
     }

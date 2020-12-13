@@ -295,6 +295,17 @@ namespace Advent_of_code
             }
             return bigMap;
         }
+
+        public static int CheckValidPassports(List<Passport> passports)
+        {
+            int count = 0;
+            foreach (Passport p in passports)
+            {
+                if (p.Valid)
+                    count++;
+            }
+            return count;
+        }
     }
 
 
