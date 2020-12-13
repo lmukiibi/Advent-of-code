@@ -12,6 +12,8 @@ namespace Advent_of_code.Days
         private string path = @"C:\Users\123\source\repos\Advent of code\Input codes\input day 4.txt";
         private string importedString;
 
+        List<Passport> myPassports;
+
         List<string> listOfValues;
         public Day4()
         {
@@ -21,9 +23,21 @@ namespace Advent_of_code.Days
 
         public void Run()
         {
-            listOfValues = Logics_Class.StringOfBlocksToList(importedString);
-            Console.WriteLine(importedString);
+            myPassports = Logics_Class.StringOfBlocksToList(importedString);
+
+            WriteAllPassports(myPassports);
+            
+            //Console.WriteLine(importedString);
             Console.ReadKey();
+        }
+
+        private void WriteAllPassports(List<Passport> pass)
+        {
+            foreach (Passport p in pass)
+            {
+                Console.WriteLine($"{p.Byr} {p.Cid} {p.Ecl} {p.Eyr} {p.Hcl} {p.Hgt} {p.Iyr} {p.Pid}\n");
+            }
         }
     }
 }
+//Devide the key:values into BLOCKS likea class, divide the list

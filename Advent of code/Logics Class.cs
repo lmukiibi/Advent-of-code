@@ -40,16 +40,17 @@ namespace Advent_of_code
         }
 
 
-        public static List<string> StringOfBlocksToList(string s)
+        public static List<Passport> StringOfBlocksToList(string impString)
         {
+            List<Passport> listOfPassports = new List<Passport>();
             string buffer = "";
             string temp = "";
             List<string> listOfStrings = new List<string>();
             List<string> returnList = new List<string>();
-            for (int i = 0; i < s.Length; i++)
+            for (int i = 0; i < impString.Length; i++)
             {
-                if (s[i].ToString() != "\n")
-                    buffer += s[i];
+                if (impString[i].ToString() != "\n")
+                    buffer += impString[i];
                 else
                 {
                     listOfStrings.Add(buffer);
@@ -57,17 +58,43 @@ namespace Advent_of_code
                 }
             }
             listOfStrings.Add(buffer);
-            foreach (String st in listOfStrings)
+
+            foreach (String s in listOfStrings)
+            {
+                if (s != "\r")
+                {
+                    temp += s;
+                }
+                else
+                {
+                    returnList.Add(temp);
+                    temp = "";
+                }
+            }
+            returnList.Add(temp);
+            listOfStrings = null;
+            listOfStrings = new List<string>();
+
+            //This is supposed to remove the \r at the end of lines
+            foreach (String s in returnList)
             {
                 temp = "";
-                for (int i = 0; i < st.Length; i++)
+                for (int i = 0; i < s.Length; i++)
                 {
-                    if (s[i].ToString() != "\r")
-                        temp += st[i];
+
+                        if (s[i].ToString() != "\r")
+                            temp += s[i];
+                        else if (s[i].ToString() == "\r" && i != 0 && i != s.Length - 1)
+                            temp += " ";
+
                 }
-                returnList.Add(temp);
+                listOfStrings.Add(temp);
             }
-            return returnList;
+
+            foreach (String s in listOfStrings)
+                listOfPassports.Add(new Passport(s));
+            //return returnList;
+            return listOfPassports;
 
         }
 

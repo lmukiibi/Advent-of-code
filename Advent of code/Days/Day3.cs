@@ -10,7 +10,7 @@ namespace Advent_of_code.Days
     class Day3
     {
         private string path = @"C:\Users\123\source\repos\Advent of code\Input codes\input day 3.txt";
-        private string path2 = @"C:\Users\123\source\repos\Advent of code\Input codes\input day 31.txt";
+        //private string path2 = @"C:\Users\123\source\repos\Advent of code\Input codes\input day 31.txt";
         private string importedString;
 
         private char[,] twoDArr;
