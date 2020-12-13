@@ -38,8 +38,66 @@ namespace Advent_of_code
             return returnList;
 
         }
+        public static List<string> StringOfBlocksToList2(string impString)
+        {
+            List<Passport> listOfPassports = new List<Passport>();
+            string buffer = "";
+            string temp = "";
+            List<string> listOfStrings = new List<string>();
+            List<string> returnList = new List<string>();
+            for (int i = 0; i < impString.Length; i++)
+            {
+                if (impString[i].ToString() != "\n")
+                    buffer += impString[i];
+                else
+                {
+                    listOfStrings.Add(buffer);
+                    buffer = "";
+                }
+            }
+            listOfStrings.Add(buffer);
 
+            foreach (String s in listOfStrings)
+            {
+                if (s != "\r")
+                {
+                    temp += s;
+                }
+                else
+                {
+                    returnList.Add(temp);
+                    temp = "";
+                }
+            }
+            returnList.Add(temp);
+            listOfStrings = null;
+            listOfStrings = new List<string>();
 
+            //This is supposed to remove the \r at the end of lines
+            foreach (String s in returnList)
+            {
+                temp = "";
+                for (int i = 0; i < s.Length; i++)
+                {
+
+                    if (s[i].ToString() != "\r")
+                        temp += s[i];
+                    else if (s[i].ToString() == "\r" && i != 0 && i != s.Length - 1)
+                        temp += " ";
+
+                }
+                listOfStrings.Add(temp);
+            }
+
+            //foreach (String s in listOfStrings)
+            //    listOfPassports.Add(new Passport(s));
+
+            return listOfStrings;
+            //return listOfPassports;
+
+        }
+
+        //Specific to passport
         public static List<Passport> StringOfBlocksToList(string impString)
         {
             List<Passport> listOfPassports = new List<Passport>();
@@ -352,6 +410,40 @@ namespace Advent_of_code
             }
 
             return freeSeats;
+        }
+
+        public static List<int> GetNumberOfQuestionsAsked(List<string> list)
+        {
+            List<int> listOfQuestionsAnswered = new List<int>();
+            string abc = "abcdefghijklmnopqrstuvwxyz";
+            int count = 0;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                count = 0;
+                for (int j = 0; j < abc.Length; j++)
+                {
+                    if (list[i].Contains(abc[j].ToString()))
+                        count++;
+                }
+                listOfQuestionsAnswered.Add(count);
+            }
+
+            /*This is for part 1
+            for (int i = 0; i < list.Count; i++)
+            {
+                count = 0;
+                for (int j = 0; j < abc.Length; j++)
+                {
+                    if (list[i].Contains(abc[j].ToString()))
+                        count++;
+                }
+                listOfQuestionsAnswered.Add(count);
+            }
+            */
+
+
+            return listOfQuestionsAnswered;
         }
     }
 

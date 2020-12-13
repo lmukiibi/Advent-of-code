@@ -49,6 +49,7 @@
     <Compile Include="Days\Day3.cs" />
     <Compile Include="Days\Day4.cs" />
     <Compile Include="Days\Day5.cs" />
+    <Compile Include="Days\Day6.cs" />
     <Compile Include="Import Class.cs" />
     <Compile Include="Logics Class.cs" />
     <Compile Include="Passport.cs" />
